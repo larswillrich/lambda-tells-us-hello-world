@@ -1,39 +1,23 @@
 module "api_gateway" {
   source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/apigateway"
-  api_name            = "events"
-  api_gateway_name    = "sebastians_api"
+  api_name            = "hello"
+  api_gateway_name    = "helloworld_api"
 }
 
 module "api_gateway_get_method" {
   source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/apiMethod"
   http_method         = "GET"
-  lambda_invoke_arn   = module.lambda_read_event.lambda_invoke_arn
-  function_name       = module.lambda_read_event.function_name
-}
-module "api_gateway_post_method" {
-  source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/apiMethod"
-  http_method         = "POST"
-  lambda_invoke_arn   = module.lambda_new_event.lambda_invoke_arn
-  function_name       = module.lambda_new_event.function_name
+  lambda_invoke_arn   = module.lambda_hello_world.lambda_invoke_arn
+  function_name       = module.lambda_hello_world.function_name
 }
 
 module "basic_infrastructure" {
   source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/basicInfrastructure"
 }
 
-module "lambda_new_event" {
+module "lambda_hello_world" {
   source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/lambda"
-  function_name       = "newEvent"
-}
-
-module "lambda_read_event" {
-  source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/lambda"
-  function_name       = "readEvent"
-}
-
-module "database" {
-  source              = "github.com/larswillrich/api-gateway-with-lambda-and-dynamodb.git//modules/database"
-  api_name              = "events"
+  function_name       = "helloworld"
 }
 
 module "api_gateway_deployment" {
