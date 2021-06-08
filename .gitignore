@@ -32,5 +32,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-/newEvent
-/readEvent
+/helloworld
